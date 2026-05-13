@@ -1,7 +1,8 @@
 package br.andersonmoralez.sparkvideocourse
 
-import br.andersonmoralez.sparkvideocourse.io.DataLoader
-import org.apache.spark.sql.functions.col
+import io.DataLoader
+
+import org.apache.spark.sql.functions.{col, concat, lit}
 import org.apache.spark.sql.types.StringType
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
@@ -34,20 +35,29 @@ object Main {
 
       //df.select("Age", "Gender", "Avg_BPM").show()
       //val column = df("Age")
-      col("Age")
+
+      col("Age") // Obtém a coluna "Age"
+
+      // Interpolated String
       import spark.implicits._
       $"Age"
 
       //df.select(column, $"Gender", df("Avg_BPM")).show()
 
-      val column = df("Age")
-      val newColumn = (column + 2.0).as("Age_2.0")
-      val columnString = column.cast(StringType).as("Age_String_Type")
+      val column = df("Age") // Obtém a coluna
+      val newColumn = (column + 2.0).as("Age_2.0") // Soma 2.0
+      val columnString = column.cast(StringType).as("Age_String_Type") // Converte para String
 
-      df.select(column, newColumn, columnString)
+      val litColumn = lit(2.0)
+      val newColumnString = concat(columnString, lit("Hello World")).as("newColumnString") // Concatena
+
+      df.select(column, newColumn, columnString, newColumnString)
         .filter(newColumn > 20.00)
         .filter(newColumn > column)
-        .show()
+        .show(truncate=false)
+
+
+
 
     } catch {
       case e: Exception =>
