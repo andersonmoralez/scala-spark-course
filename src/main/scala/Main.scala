@@ -1,6 +1,7 @@
 package br.andersonmoralez.sparkvideocourse
 
-import br.andersonmoralez.sparkvideocourse.io.DataLoader
+import io.DataLoader
+
 import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.types.StringType
 import org.apache.spark.sql.{DataFrame, SparkSession}
@@ -28,26 +29,27 @@ object Main {
         println("Dados carregados com sucesso!")
       }
 
+      // df.show()
+      // df.printSchema()
 
-      //df.printSchema() // Mostra a estrutura (colunas e tipos)
-      //df.show(10) // Mostra as 10 primeiras linhas
+      // Renomeando colunas
+      val renameColumns = List(
+        col("Age").as("age"),
+        col("Gender").as("gender"),
+        col("Weight (kg)").as("weightKg"),
+        col("Height (m)").as("heightM"),
+        col("Max_BPM").as("maxBPM"),
+        col("Avg_BPM").as("avgBPM")
+      )
 
-      //df.select("Age", "Gender", "Avg_BPM").show()
-      //val column = df("Age")
-      col("Age")
-      import spark.implicits._
-      $"Age"
+      // df.select(renameColumns: _*).show()
 
-      //df.select(column, $"Gender", df("Avg_BPM")).show()
+      // Diferença entre dois valores
+      val weightHeight = df.select(renameColumns: _*)
+        .withColumn("diff", col("weightKg") - col("heightM"))
+        .filter(col("weightKg") > col("heightM")) // heightM deve ser maior que WeightKg
 
-      val column = df("Age")
-      val newColumn = (column + 2.0).as("Age_2.0")
-      val columnString = column.cast(StringType).as("Age_String_Type")
-
-      df.select(column, newColumn, columnString)
-        .filter(newColumn > 20.00)
-        .filter(newColumn > column)
-        .show()
+      weightHeight.show()
 
     } catch {
       case e: Exception =>
