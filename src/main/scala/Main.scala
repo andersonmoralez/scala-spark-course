@@ -2,7 +2,7 @@ package br.andersonmoralez.sparkvideocourse
 
 import io.DataLoader
 
-import org.apache.spark.sql.functions.{col, concat, lit}
+import org.apache.spark.sql.functions.{col, concat, current_timestamp, expr, lit}
 import org.apache.spark.sql.types.StringType
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
@@ -16,48 +16,31 @@ object Main {
       .config("spark.driver.bindAddress", "127.0.0.1")
       .getOrCreate()
 
-    // 2. Definir o nome do arquivo que está na pasta 'data'
+    // Definir o nome do arquivo que está na pasta 'data'
     val meuArquivoDeEstudo = "Final_data.csv"
 
     try {
       // val df = DataLoader.loadCsv(spark, meuArquivoDeEstudo)
-
       val df: DataFrame = DataLoader.loadCsv(spark, meuArquivoDeEstudo)
 
-      // 4. Mostrar os dados
+      // Mostrar os dados
       if (AppConfig.printDebugInfo) {
         println("Dados carregados com sucesso!")
       }
 
 
       //df.printSchema() // Mostra a estrutura (colunas e tipos)
-      //df.show(10) // Mostra as 10 primeiras linhas
+//      df.show(10) // Mostra as 10 primeiras linhas
 
-      //df.select("Age", "Gender", "Avg_BPM").show()
-      //val column = df("Age")
+//      val timestampFromExpression = expr("cast(current_timestamp() as string) as timestampExpression") // Expression
+//      val timestampFromFunctions = current_timestamp().cast(StringType).as("timestampFunctions") // Functions
+//      df.select(timestampFromExpression, timestampFromFunctions).show()
 
-      col("Age") // Obtém a coluna "Age"
+//      df.selectExpr("cast(Age as string)", "Age + 1.0", "current_timestamp()").show() // Select Expression
 
-      // Interpolated String
-      import spark.implicits._
-      $"Age"
-
-      //df.select(column, $"Gender", df("Avg_BPM")).show()
-
-      val column = df("Age") // Obtém a coluna
-      val newColumn = (column + 2.0).as("Age_2.0") // Soma 2.0
-      val columnString = column.cast(StringType).as("Age_String_Type") // Converte para String
-
-      val litColumn = lit(2.0)
-      val newColumnString = concat(columnString, lit("Hello World")).as("newColumnString") // Concatena
-
-      df.select(column, newColumn, columnString, newColumnString)
-        .filter(newColumn > 20.00)
-        .filter(newColumn > column)
-        .show(truncate=false)
-
-
-
+      // Select Functions
+      df.createTempView("df")
+      spark.sql("select cast(Age as string) , Age + 1.0, current_timestamp() from df").show()
 
     } catch {
       case e: Exception =>
