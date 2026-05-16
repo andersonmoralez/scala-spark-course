@@ -1,2 +1,2 @@
-# scala-spark-course
-Projeto de Estudos Spark e Scala
+# Aula 9# GroupBy, Sort & Aggregations
+Analisando dados com GroupBy, Sort e Aggregations
