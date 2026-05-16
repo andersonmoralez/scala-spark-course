@@ -36,18 +36,18 @@ object Main {
       df
         .groupBy($"Workout_Type".as("workoutType"))
         .agg(
-          functions.avg($"Age").as("age"), // Média de idade
-          functions.max($"Weight (kg)").as("avgWeightKg"), // Maior peso
+          functions.avg($"Age").as("avgAge"), // Média de idade
+          functions.max($"Weight (kg)").as("maxWeightKg"), // Maior peso
           functions.min($"Weight (kg)").as("minWeightKg") // Menor peso
         )
         .sort($"workoutType".desc)
-        // .show()
+        .show()
 
       // Agrupa por atividade física
       df
         .groupBy($"Workout_Type".as("workoutType"))
         .max("Weight (kg)", "Height (m)") // Maior peso e altura
-        .show()
+        // .show()
 
     } catch {
       case e: Exception =>
