@@ -10,12 +10,12 @@ A branch `main` contém a configuração do projeto base construída durante as 
 
 Confira abaixo o mapeamento das aulas e suas respectivas branches:
 
-| Aula | Conteúdo / Tópicos Abordados | Branch Correspondente |
+| Aula | Tópicos Abordados | Branch Correspondente |
 | :---: | :--- | :--- |
-| **Aula 7** | Funções de Coluna (`Col`, `Lit` e `Concat`) | `feature/column-functions` |
-| **Aula 8** | Expressões SQL (`SQL Expressions`) | `feature/sql-expressions` |
-| **Aula 9** | Exercício Prático / Desafio (`Assignment I`) | `feature/assignment-i` |
-| **Aula 11** | Agrupamentos e Ordenação (`GroupBy`, `Sort` & `Aggregations`) | `feature/groupby-sort-aggregations` |
+| **Aula 7** | Funções de Coluna (Col, Lit e Concat) | `feature/column-functions` |
+| **Aula 8** | Expressões SQL (SQL Expressions) | `feature/sql-expressions` |
+| **Aula 9** | Exercício Prático / Desafio (Assignment I) | `feature/assignment-i` |
+| **Aula 11** | Agrupamentos e Ordenação (GroupBy, Sort & Aggregations) | `feature/groupby-sort-aggregations` |
 
 ## 🛠️ Tecnologias Utilizadas
 * **Scala**
