@@ -16,6 +16,7 @@ Confira abaixo o mapeamento das aulas e suas respectivas branches:
 | **Aula 8** | Expressões SQL (SQL Expressions) | `feature/sql-expressions` |
 | **Aula 9** | Exercício Prático / Desafio (Assignment I) | `feature/assignment-i` |
 | **Aula 11** | Agrupamentos e Ordenação (GroupBy, Sort & Aggregations) | `feature/groupby-sort-aggregations` |
+| **Aula 12** | Funções de Janela (Window Functions) | `feature/window-functions` |
 
 ## 🛠️ Tecnologias Utilizadas
 * **Scala**
