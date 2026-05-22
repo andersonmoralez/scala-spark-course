@@ -17,6 +17,7 @@ Confira abaixo o mapeamento das aulas e suas respectivas branches:
 | **Aula 9** | Exercício Prático / Desafio (Assignment I) | `feature/assignment-i` |
 | **Aula 11** | Agrupamentos e Ordenação (GroupBy, Sort & Aggregations) | `feature/groupby-sort-aggregations` |
 | **Aula 12** | Funções de Janela (Window Functions) | `feature/window-functions` |
+| **Aula 16** | Testes Unitários (Writing a DataFrame test case) | `feature/testable-code` |
 
 ## 🛠️ Tecnologias Utilizadas
 * **Scala**
