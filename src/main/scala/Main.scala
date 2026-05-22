@@ -16,30 +16,20 @@ object Main {
       .config("spark.driver.bindAddress", "127.0.0.1")
       .getOrCreate()
 
-    // 2. Definir o nome do arquivo que está na pasta 'data'
+    // 1. Defini o nome do arquivo que está na pasta 'data'
     val meuArquivoDeEstudo = "Final_data.csv"
 
     try {
-      // val df = DataLoader.loadCsv(spark, meuArquivoDeEstudo)
-
+      // 2. Carregando o arquivo
       val df: DataFrame = DataLoader.loadCsv(spark, meuArquivoDeEstudo)
 
-      // 4. Mostrar os dados
+      // 3. Log de carregamento
       if (AppConfig.printDebugInfo) {
         println("Dados carregados com sucesso!")
       }
 
       //df.printSchema() // Mostra a estrutura (colunas e tipos)
       //df.show(10) // Mostra as 10 primeiras linhas
-
-      import spark.implicits._
-
-      //Particiona por Frequência de Refeição Diária e ordena por Calorias Perdidas
-      val window = Window.partitionBy($"Daily meals frequency".as("dailyMealsFrequency")).orderBy($"Calories_Burned".desc)
-      df.withColumn("rn", row_number.over(window))
-        .filter($"rn" === 1) // Filtra frequência única
-        .sort($"Calories_Burned".desc)// Ordena pela maior caloria perdida
-        .show()
 
     } catch {
       case e: Exception =>
@@ -53,6 +43,17 @@ object Main {
     scala.io.StdIn.readLine()
 
     spark.stop() // Boa prática: sempre pare a sessão no final
+  }
+
+  // Método da Window Functions
+  def mealFrequencyPerCalories(df: DataFrame): DataFrame = {
+    import df.sparkSession.implicits._ // Importa recusos implicitos a partir da sessão anterior
+
+    //Particiona por Frequência de Refeição Diária e ordena por Calorias Perdidas
+    val window = Window.partitionBy($"Daily meals frequency".as("dailyMealsFrequency")).orderBy($"Calories_Burned".desc)
+    df.withColumn("rn", row_number.over(window))
+      .filter($"rn" === 1) // Filtra frequência única
+      .sort($"Calories_Burned".desc) // Ordena pela maior caloria perdida
   }
 }
 
